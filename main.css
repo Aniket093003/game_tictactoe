@@ -41,7 +41,12 @@ body{
     font-size: 5vmin;
 }
 .message-container{
-    height: 30vmin;
+    height: 100vmin;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    gap: 10px;
 }
 .hide{
     display: none;
