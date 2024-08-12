@@ -4,6 +4,7 @@ let Newgame = document.querySelector("#new-game");
 let message_container = document.querySelector(".message-container");
 let message = document.querySelector(".message");
 let turnO = true;
+let gameBox = document.querySelector(".gameBox")
 let count = 0;
 let winPattern = [
   [0, 1, 2],
@@ -38,11 +39,13 @@ boxes.forEach((box) => {
 const gameDraw = () => {
     message.innerText = `Game was a Draw.`;
     message_container.classList.remove("hide");
+    gameBox.classList.add("hide");
     disableboxes();
   };
 let showWinner = (winner) => {
   message.innerText = `Winner is ${winner} `;
   message_container.classList.remove("hide");
+  gameBox.classList.add("hide")
   disableboxes();
 };
 
@@ -74,6 +77,7 @@ let resetGame = ()=>{
      turnO=true;
      enableboxes();
      message_container.classList.add("hide");
+     gameBox.classList.remove("hide");
 };
 resetButton.addEventListener("click", resetGame);
 Newgame.addEventListener("click", resetGame);
