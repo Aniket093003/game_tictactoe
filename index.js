@@ -19,7 +19,6 @@ let winPattern = [
 
 boxes.forEach((box) => {
   box.addEventListener("click", () => {
-
     if (turnO) {
       box.innerHTML = "O";
       turnO = false;
@@ -27,27 +26,18 @@ boxes.forEach((box) => {
       box.innerHTML = "X";
       turnO = true;
     }
-    box.disabled = true;
+    box.classList.add("disabled");
     count++;
 
     let isWinner = checkWinner();
+    if (isWinner) {
+      return;
+    }
     if(count === 9 && !isWinner){
-    gameDraw();
+      gameDraw();
     }
   });
 });
-const gameDraw = () => {
-    message.innerText = `Game was a Draw.`;
-    message_container.classList.remove("hide");
-    gameBox.classList.add("hide");
-    disableboxes();
-  };
-let showWinner = (winner) => {
-  message.innerText = `Winner is ${winner} `;
-  message_container.classList.remove("hide");
-  gameBox.classList.add("hide")
-  disableboxes();
-};
 
 let checkWinner = () => {
   for (let pattern of winPattern) {
@@ -58,26 +48,47 @@ let checkWinner = () => {
     if (pos1 != "" && pos2 != "" && pos3 != "") {
       if (pos1 === pos2 && pos2 === pos3) {
         showWinner(pos1);
+        return true;
       }
     }
   }
+  return false;
 };
+
+let showWinner = (winner) => {
+  message.innerText = `Winner is ${winner}`;
+  message_container.classList.remove("hide");
+  gameBox.classList.add("hide");
+  disableboxes();
+};
+
+const gameDraw = () => {
+  message.innerText = `Game was a Draw.`;
+  message_container.classList.remove("hide");
+  gameBox.classList.add("hide");
+  disableboxes();
+};
+
 let disableboxes = () => {
-  for (let box of boxes) {
-    box.disabled = true;
-  }
+  boxes.forEach((box) => {
+    box.classList.add("disabled");
+  });
 };
+
 let enableboxes = () => {
-  for (let box of boxes) {
-    box.disabled = false;
+  boxes.forEach((box) => {
+    box.classList.remove("disabled");
     box.innerText = "";
-  }
+  });
 };
-let resetGame = ()=>{
-     turnO=true;
-     enableboxes();
-     message_container.classList.add("hide");
-     gameBox.classList.remove("hide");
+
+let resetGame = () => {
+  turnO = true;
+  count = 0;
+  enableboxes();
+  message_container.classList.add("hide");
+  gameBox.classList.remove("hide");
 };
+
 resetButton.addEventListener("click", resetGame);
 Newgame.addEventListener("click", resetGame);
